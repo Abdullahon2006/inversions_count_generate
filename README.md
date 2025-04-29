@@ -9,7 +9,7 @@ This Java program helps analyze and create song rankings by:
 ## Key Features
 
 - **Count Inversions**: Measures how many pairs are in different order between rankings
-- **Generate Rankings**: Creates song rankings with exact numbers of inversions
+- **Generate Rankings**: Creates inversions with exact numbers of inversions
 - **Efficient Algorithms**: Runs quickly even for large numbers of songs
 
 ## How to Use
@@ -18,13 +18,7 @@ This Java program helps analyze and create song rankings by:
    ```bash
    javac Inversions.java
    ```
-
-2. Count inversions in a ranking (comma-separated):
-   ```bash
-   java Inversions count 3,1,0,2
-   ```
-
-3. Generate a ranking with specific inversions:
+2. Generate a ranking with specific inversions:
    ```bash
    java Inversions generate 10 20
    ```
