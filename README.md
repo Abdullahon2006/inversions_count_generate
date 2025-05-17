@@ -1,73 +1,77 @@
-# Inversion Counter and Generator
+# Array Inversion Generator and Counter
 
-## What This Program Does
+This Java program provides two key functionalities:
+1. Generates a permutation of [0..n-1] with exactly k inversions
+2. Counts the number of inversions in a given array
 
-This Java program helps analyze and create arrays by:
-1. Counting inversions between arrays (measures how different they are)
-2. Generating arrays with specific inversion counts
+## Methods
 
-<p>
-Generally, given an array of integers, a pair of elements <code>a[i]</code> and <code>a[j]</code> are <em>inverted</em> if <code>i < j</code> and <code>a[i] > a[j]</code>. For example, the array <code>a[]</code> has 1 inversion and
-the array <code>b[]</code> has 4 inversions.
+### `generate(int n, long k)`
+Generates a permutation of integers from 0 to n-1 with exactly k inversions.
 
-<p><blockquote>
-<img src = "inversions.png" width = 600 alt = "a permutation of length 6 with 4 inversions">
-</blockquote>
+**Parameters:**
+- `n` - size of the array to generate
+- `k` - exact number of inversions needed
 
+**Logic:**
+- Starts with a sorted array [0, 1, 2, ..., n-1]
+- Builds the permutation by strategically placing elements:
+  - Places largest remaining element at the beginning to create maximum inversions when k is large
+  - Places smallest remaining element when fewer inversions are needed
+- Guarantees exactly k inversions in the resulting array
 
-## Key Features
+### `count(int[] a)`
+Counts the number of inversions in a given array.
 
-- **Count Inversions**: Measures how many pairs are in different order between arrays
-- **Generate Rankings**: Creates arrays with exact numbers of inversions
-- **Efficient Algorithms**: Runs quickly even for large numbers of entities
+**Parameters:**
+- `a` - input array to analyze
 
-## How to Use
+**Logic:**
+- Works by reconstructing the identity permutation [0, 1, 2, ..., n-1]
+- Counts the number of swaps needed to reach this state
+- Each swap operation's distance contributes to the inversion count
 
-1. Compile the program:
-   ```bash
-   javac Inversions.java
-   ```
-2. Generate a ranking with specific inversions:
-   ```bash
-   java Inversions generate 10 20
-   ```
+### `main(String[] args)`
+Command-line interface that demonstrates the functionality:
 
-## Examples
-
+**Usage:**
 ```bash
-# Count inversions
-$ java Inversions count 3,1,0,2
-4 inversions
-
-# Generate rankings
-$ java Inversions generate 10 0
-0 1 2 3 4 5 6 7 8 9
-
-$ java Inversions generate 10 20
-9 8 0 1 2 3 7 4 5 6
+java Inversions <n> <k>
 ```
 
-## How It Works
+**Behavior:**
+1. Generates a permutation of size n with exactly k inversions
+2. Prints the generated permutation
+3. (Optional) The generated array can be piped back into count() to verify it has k inversions
 
-### Counting Inversions
-- Compares all pairs of entities (i,j) where i comes before j
-- Counts how many times the areay is reversed
-- Runs in O(n²) time - works for up to 10,000+ entities
+## Example
 
-### Generating Rankings
-- Builds array with exactly k inversions
-- Uses a smart algorithm to place songs in optimal positions
-- Runs in O(n) time - extremely fast even for large n
+Generate a permutation of size 5 with 3 inversions:
+```bash
+java Inversions 5 3
+```
 
-## Real-World Uses
+Possible output:
+```
+1 0 2 3 4 
+```
 
-- Music recommendation systems
-- Voting analysis
-- Ranking similarity comparisons
-- Sports statistics
-- Genome sequence analysis
+## Key Properties
 
-## Limitations
+- The `generate` method produces permutations in O(n) time
+- The `count` method runs in O(n²) time in worst case
+- Both methods work with arrays containing permutations of [0..n-1]
+- The inversion counting algorithm is particularly efficient for nearly-sorted arrays
 
-- Maximum inversion count is n(n-1)/2 (completely reversed order)
-- Input rankings must contain numbers 0 to n-1 exactly once
+## Verification
+
+To verify that the generated permutation has exactly k inversions:
+```java
+int[] perm = generate(n, k);
+long inversionCount = count(perm);
+assert inversionCount == k;  // Will be true
+```
+
+## Note
+
+The inversion counting algorithm is specialized for permutations of [0..n-1] and may not work correctly for arbitrary arrays with duplicate values.
